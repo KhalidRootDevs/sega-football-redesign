@@ -194,20 +194,6 @@ export default function MatchCard({ match }: MatchCardProps) {
         </div>
       </div>
 
-      {/* Additional Match Info */}
-      {(match.streamSources || match.platforms) && (
-        <div className="px-6 pb-3">
-          <div className="flex items-center justify-between text-xs text-gray-500">
-            {match.streamSources && match.streamSources.length > 0 && (
-              <span>{match.streamSources.length} stream sources</span>
-            )}
-            {match.platforms && match.platforms.length > 0 && (
-              <span>{match.platforms.length} platforms</span>
-            )}
-          </div>
-        </div>
-      )}
-
       {/* Action Button */}
       <div className="px-6 pb-4">
         <button
@@ -225,21 +211,6 @@ export default function MatchCard({ match }: MatchCardProps) {
           />
           {statusConfig.buttonText}
         </button>
-
-        {/* Quick Actions */}
-        {match.fixtureId && (
-          <div className="flex gap-2 mt-2">
-            <button className="flex-1 text-xs text-gray-500 hover:text-gray-700 py-1 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors">
-              Stats
-            </button>
-            <button className="flex-1 text-xs text-gray-500 hover:text-gray-700 py-1 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors">
-              Lineups
-            </button>
-            <button className="flex-1 text-xs text-gray-500 hover:text-gray-700 py-1 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors">
-              H2H
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
