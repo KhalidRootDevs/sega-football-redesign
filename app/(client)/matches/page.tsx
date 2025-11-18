@@ -69,7 +69,7 @@ const teamsData = [
   },
 ];
 
-const fixturesData = [
+export const fixturesData = [
   {
     matches: [
       {
