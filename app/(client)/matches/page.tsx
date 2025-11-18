@@ -203,7 +203,7 @@ export const fixturesData = [
 ];
 
 // Transform your data to match the expected Match interface
-const transformMatches = () => {
+export const transformMatches = () => {
   const allMatches: any[] = [];
 
   fixturesData.forEach((day) => {
