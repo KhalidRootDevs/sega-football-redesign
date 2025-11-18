@@ -259,6 +259,7 @@ export default function MatchesPage() {
   const [teamFilter, setTeamFilter] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
   // Transform and use your actual data
   const mockMatches = useMemo(() => transformMatches(), []);
@@ -386,56 +387,242 @@ export default function MatchesPage() {
           </div>
         </div>
 
-        {/* Filter Groups */}
-        <div className="bg-[#0f1419] border border-[#1a2a38] rounded-xl p-4 md:p-6 mb-6">
-          {/* Search Bar */}
-          <div className="mb-5">
-            <label className="text-sm font-medium text-[#7a8a96] mb-2 flex items-center gap-2">
-              <Search size={14} />
-              Search Matches
-            </label>
-            <div className="relative">
-              <Search
-                size={18}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7a8a96]"
-              />
-              <input
-                type="text"
-                placeholder="Search by teams, leagues..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#1a2332] text-[#f5f7fa] placeholder-[#7a8a96] pl-10 pr-10 py-3 rounded-lg border border-[#2a3a48] focus:border-[#00d4ff] focus:outline-none focus:ring-2 focus:ring-[#00d4ff]/20 transition-all"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7a8a96] hover:text-[#00d4ff] transition-colors"
-                >
-                  <X size={18} />
-                </button>
-              )}
-            </div>
+        <div className="mb-6">
+          {/* Mobile: Collapsible with toggle button */}
+          <div className="lg:hidden">
+            <Button
+              onClick={() => setShowFilters(!showFilters)}
+              variant="outline"
+              className="w-full bg-[#0f1419] border-[#1a2a38] text-[#f5f7fa] hover:bg-[#1a2332] hover:border-[#00d4ff]/30 justify-between h-11"
+            >
+              <span className="flex items-center gap-2">
+                <SlidersHorizontal size={18} />
+                <span className="font-medium">Filters & Search</span>
+                {hasActiveFilters && (
+                  <Badge className="bg-[#00d4ff] text-[#0a0e12] h-5 px-2 text-xs font-semibold">
+                    {
+                      [
+                        statusFilter !== "all",
+                        leagueFilter !== "all",
+                        teamFilter !== "all",
+                        searchQuery !== "",
+                      ].filter(Boolean).length
+                    }
+                  </Badge>
+                )}
+              </span>
+              <span className="text-xs text-[#7a8a96]">
+                {showFilters ? "Hide" : "Show"}
+              </span>
+            </Button>
+
+            {showFilters && (
+              <div className="mt-3 bg-[#0f1419] border border-[#1a2a38] rounded-xl p-4 space-y-4">
+                {/* Search */}
+                <div className="relative">
+                  <Search
+                    size={18}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7a8a96]"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Search teams, leagues..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-[#1a2332] text-[#f5f7fa] placeholder-[#7a8a96] pl-10 pr-10 py-3 rounded-lg border border-[#2a3a48] focus:border-[#00d4ff] focus:outline-none focus:ring-2 focus:ring-[#00d4ff]/20 transition-all"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7a8a96] hover:text-[#00d4ff] transition-colors"
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
+
+                {/* Status Buttons */}
+                <div>
+                  <label className="text-xs font-medium text-[#7a8a96] mb-2 block">
+                    Match Status
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant={statusFilter === "all" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setStatusFilter("all")}
+                      className={
+                        statusFilter === "all"
+                          ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 h-10"
+                          : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 h-10"
+                      }
+                    >
+                      All
+                    </Button>
+                    <Button
+                      variant={statusFilter === "live" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setStatusFilter("live")}
+                      className={
+                        statusFilter === "live"
+                          ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 h-10"
+                          : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 h-10"
+                      }
+                    >
+                      <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2" />
+                      Live
+                    </Button>
+                    <Button
+                      variant={
+                        statusFilter === "upcoming" ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setStatusFilter("upcoming")}
+                      className={
+                        statusFilter === "upcoming"
+                          ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 h-10"
+                          : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 h-10"
+                      }
+                    >
+                      <Clock size={14} className="mr-2" />
+                      Upcoming
+                    </Button>
+                    <Button
+                      variant={
+                        statusFilter === "finished" ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setStatusFilter("finished")}
+                      className={
+                        statusFilter === "finished"
+                          ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 h-10"
+                          : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 h-10"
+                      }
+                    >
+                      Finished
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Dropdowns */}
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-xs font-medium text-[#7a8a96] mb-2 block">
+                      League
+                    </label>
+                    <Select
+                      value={leagueFilter}
+                      onValueChange={(value) => setLeagueFilter(value)}
+                    >
+                      <SelectTrigger className="bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] h-10 hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
+                        <div className="flex items-center gap-2">
+                          <Shield size={14} className="text-[#7a8a96]" />
+                          <SelectValue placeholder="All Leagues" />
+                        </div>
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
+                        <SelectItem value="all">All Leagues</SelectItem>
+                        {leagues.map((league) => (
+                          <SelectItem key={league} value={league}>
+                            {league}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-medium text-[#7a8a96] mb-2 block">
+                      Team
+                    </label>
+                    <Select
+                      value={teamFilter}
+                      onValueChange={(value) => setTeamFilter(value)}
+                    >
+                      <SelectTrigger className="bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] h-10 hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
+                        <div className="flex items-center gap-2">
+                          <Users size={14} className="text-[#7a8a96]" />
+                          <SelectValue placeholder="All Teams" />
+                        </div>
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
+                        <SelectItem value="all">All Teams</SelectItem>
+                        {teams.map((team) => (
+                          <SelectItem key={team} value={team}>
+                            {team}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-medium text-[#7a8a96] mb-2 block">
+                      Sort By
+                    </label>
+                    <Select
+                      value={sortOrder}
+                      onValueChange={(value) =>
+                        setSortOrder(value as SortOrder)
+                      }
+                    >
+                      <SelectTrigger className="bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] h-10 hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
+                        <div className="flex items-center gap-2">
+                          <Calendar size={14} className="text-[#7a8a96]" />
+                          <SelectValue placeholder="Sort by Time" />
+                        </div>
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
+                        <SelectItem value="asc">Earliest First</SelectItem>
+                        <SelectItem value="desc">Latest First</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column - Match Status */}
-            <div className="lg:col-span-1">
-              <label className="text-sm font-medium text-[#7a8a96] mb-3 flex items-center gap-2">
-                <Shield size={14} />
-                Match Status
-              </label>
-              <div className="grid grid-cols-4 gap-2">
+          {/* Desktop: Always visible with better layout */}
+          <div className="hidden lg:block bg-[#0f1419] border border-[#1a2a38] rounded-xl p-5">
+            {/* Top Row: Search + Status Filters */}
+            <div className="flex gap-4 mb-4">
+              {/* Search Bar - Takes more space */}
+              <div className="flex-1 relative">
+                <Search
+                  size={18}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7a8a96]"
+                />
+                <input
+                  type="text"
+                  placeholder="Search teams, leagues..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-[#1a2332] text-[#f5f7fa] placeholder-[#7a8a96] pl-10 pr-10 py-2.5 rounded-lg border border-[#2a3a48] focus:border-[#00d4ff] focus:outline-none focus:ring-2 focus:ring-[#00d4ff]/20 transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7a8a96] hover:text-[#00d4ff] transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
+
+              {/* Status Filter Buttons - Compact inline */}
+              <div className="flex gap-2">
                 <Button
                   variant={statusFilter === "all" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setStatusFilter("all")}
                   className={
                     statusFilter === "all"
-                      ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 justify-start"
-                      : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 justify-start"
+                      ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 h-10 px-4"
+                      : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 h-10 px-4"
                   }
                 >
-                  All Matches
+                  All
                 </Button>
                 <Button
                   variant={statusFilter === "live" ? "default" : "outline"}
@@ -443,8 +630,8 @@ export default function MatchesPage() {
                   onClick={() => setStatusFilter("live")}
                   className={
                     statusFilter === "live"
-                      ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 justify-start"
-                      : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 justify-start"
+                      ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 h-10 px-4"
+                      : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 h-10 px-4"
                   }
                 >
                   <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2" />
@@ -456,11 +643,11 @@ export default function MatchesPage() {
                   onClick={() => setStatusFilter("upcoming")}
                   className={
                     statusFilter === "upcoming"
-                      ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 justify-start"
-                      : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 justify-start"
+                      ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 h-10 px-4"
+                      : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 h-10 px-4"
                   }
                 >
-                  <Calendar size={14} className="mr-2" />
+                  <Clock size={14} className="mr-2" />
                   Upcoming
                 </Button>
                 <Button
@@ -469,8 +656,8 @@ export default function MatchesPage() {
                   onClick={() => setStatusFilter("finished")}
                   className={
                     statusFilter === "finished"
-                      ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 justify-start"
-                      : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 justify-start"
+                      ? "bg-[#00d4ff] text-[#0a0e12] hover:bg-[#00b8e6] border-0 h-10 px-4"
+                      : "bg-[#1a2332] text-[#7a8a96] border-[#2a3a48] hover:bg-[#2a3a48] hover:text-[#f5f7fa] hover:border-[#00d4ff]/30 h-10 px-4"
                   }
                 >
                   Finished
@@ -478,153 +665,135 @@ export default function MatchesPage() {
               </div>
             </div>
 
-            {/* Right Column - League, Team, Sort Filters */}
-            <div className="lg:col-span-1">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {/* League Filter */}
-                <div>
-                  <label className="text-sm font-medium text-[#7a8a96] mb-3 flex items-center gap-1.5">
-                    <Shield size={12} />
-                    League
-                  </label>
-                  <Select
-                    value={leagueFilter}
-                    onValueChange={(value) => setLeagueFilter(value)}
-                  >
-                    <SelectTrigger className="bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
-                      <SelectValue placeholder="All Leagues" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
-                      <SelectItem value="all">All Leagues</SelectItem>
-                      {leagues.map((league) => (
-                        <SelectItem key={league} value={league}>
-                          {league}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+            {/* Bottom Row: Dropdown Filters */}
+            <div className="flex gap-3">
+              <Select
+                value={leagueFilter}
+                onValueChange={(value) => setLeagueFilter(value)}
+              >
+                <SelectTrigger className="flex-1 bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] h-10 hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
+                  <div className="flex items-center gap-2">
+                    <Shield size={14} className="text-[#7a8a96]" />
+                    <SelectValue placeholder="All Leagues" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
+                  <SelectItem value="all">All Leagues</SelectItem>
+                  {leagues.map((league) => (
+                    <SelectItem key={league} value={league}>
+                      {league}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-                {/* Team Filter */}
-                <div>
-                  <label className="text-sm font-medium text-[#7a8a96] mb-3 flex items-center gap-1.5">
-                    <Users size={12} />
-                    Team
-                  </label>
-                  <Select
-                    value={teamFilter}
-                    onValueChange={(value) => setTeamFilter(value)}
-                  >
-                    <SelectTrigger className="bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
-                      <SelectValue placeholder="All Teams" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
-                      <SelectItem value="all">All Teams</SelectItem>
-                      {teams.map((team) => (
-                        <SelectItem key={team} value={team}>
-                          {team}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <Select
+                value={teamFilter}
+                onValueChange={(value) => setTeamFilter(value)}
+              >
+                <SelectTrigger className="flex-1 bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] h-10 hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
+                  <div className="flex items-center gap-2">
+                    <Users size={14} className="text-[#7a8a96]" />
+                    <SelectValue placeholder="All Teams" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
+                  <SelectItem value="all">All Teams</SelectItem>
+                  {teams.map((team) => (
+                    <SelectItem key={team} value={team}>
+                      {team}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-                {/* Sort Order */}
-                <div>
-                  <label className="text-sm font-medium text-[#7a8a96] mb-3 flex items-center gap-1.5">
-                    <Clock size={12} />
-                    Sort by Time
-                  </label>
-                  <Select
-                    value={sortOrder}
-                    onValueChange={(value) => setSortOrder(value as SortOrder)}
-                  >
-                    <SelectTrigger className="bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
-                      <SelectValue placeholder="Sort by Time" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
-                      <SelectItem value="asc">Earliest First</SelectItem>
-                      <SelectItem value="desc">Latest First</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+              <Select
+                value={sortOrder}
+                onValueChange={(value) => setSortOrder(value as SortOrder)}
+              >
+                <SelectTrigger className="flex-1 bg-[#1a2332] border-[#2a3a48] text-[#f5f7fa] h-10 hover:border-[#00d4ff]/50 focus:border-[#00d4ff] focus:ring-[#00d4ff]/20 transition-all">
+                  <div className="flex items-center gap-2">
+                    <Calendar size={14} className="text-[#7a8a96]" />
+                    <SelectValue placeholder="Sort by Time" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent className="bg-[#1a2332] border-[#2a3a48]">
+                  <SelectItem value="asc">Earliest First</SelectItem>
+                  <SelectItem value="desc">Latest First</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          {/* Active Filters Display */}
+          {/* Active Filters Display (Both Mobile & Desktop) */}
           {hasActiveFilters && (
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-5 pt-5 border-t border-[#1a2a38]">
-              <div className="flex items-center gap-2 text-sm text-[#7a8a96] shrink-0">
-                <SlidersHorizontal size={14} />
-                <span className="font-medium">Active:</span>
-              </div>
-              <div className="flex flex-wrap gap-2 flex-1">
-                {statusFilter !== "all" && (
-                  <Badge
-                    variant="secondary"
-                    className="bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 hover:bg-[#00d4ff]/20"
+            <div className="mt-3 flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-medium text-[#7a8a96]">
+                Active:
+              </span>
+              {statusFilter !== "all" && (
+                <Badge
+                  variant="secondary"
+                  className="bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 hover:bg-[#00d4ff]/20 text-xs h-7 px-3"
+                >
+                  {statusFilter.charAt(0).toUpperCase() + statusFilter.slice(1)}
+                  <button
+                    onClick={() => setStatusFilter("all")}
+                    className="ml-2 hover:text-[#00b8e6]"
                   >
-                    {statusFilter.charAt(0).toUpperCase() +
-                      statusFilter.slice(1)}
-                    <button
-                      onClick={() => setStatusFilter("all")}
-                      className="ml-1.5 hover:text-[#00b8e6]"
-                    >
-                      <X size={12} />
-                    </button>
-                  </Badge>
-                )}
-                {leagueFilter !== "all" && (
-                  <Badge
-                    variant="secondary"
-                    className="bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 hover:bg-[#00d4ff]/20"
+                    <X size={12} />
+                  </button>
+                </Badge>
+              )}
+              {leagueFilter !== "all" && (
+                <Badge
+                  variant="secondary"
+                  className="bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 hover:bg-[#00d4ff]/20 text-xs h-7 px-3"
+                >
+                  {leagueFilter}
+                  <button
+                    onClick={() => setLeagueFilter("all")}
+                    className="ml-2 hover:text-[#00b8e6]"
                   >
-                    {leagueFilter}
-                    <button
-                      onClick={() => setLeagueFilter("all")}
-                      className="ml-1.5 hover:text-[#00b8e6]"
-                    >
-                      <X size={12} />
-                    </button>
-                  </Badge>
-                )}
-                {teamFilter !== "all" && (
-                  <Badge
-                    variant="secondary"
-                    className="bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 hover:bg-[#00d4ff]/20"
+                    <X size={12} />
+                  </button>
+                </Badge>
+              )}
+              {teamFilter !== "all" && (
+                <Badge
+                  variant="secondary"
+                  className="bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 hover:bg-[#00d4ff]/20 text-xs h-7 px-3"
+                >
+                  {teamFilter}
+                  <button
+                    onClick={() => setTeamFilter("all")}
+                    className="ml-2 hover:text-[#00b8e6]"
                   >
-                    {teamFilter}
-                    <button
-                      onClick={() => setTeamFilter("all")}
-                      className="ml-1.5 hover:text-[#00b8e6]"
-                    >
-                      <X size={12} />
-                    </button>
-                  </Badge>
-                )}
-                {searchQuery && (
-                  <Badge
-                    variant="secondary"
-                    className="bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 hover:bg-[#00d4ff]/20"
+                    <X size={12} />
+                  </button>
+                </Badge>
+              )}
+              {searchQuery && (
+                <Badge
+                  variant="secondary"
+                  className="bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 hover:bg-[#00d4ff]/20 text-xs h-7 px-3"
+                >
+                  {'"'}
+                  {searchQuery}
+                  {'"'}
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="ml-2 hover:text-[#00b8e6]"
                   >
-                    {'"'}
-                    {searchQuery}
-                    {'"'}
-                    <button
-                      onClick={() => setSearchQuery("")}
-                      className="ml-1.5 hover:text-[#00b8e6]"
-                    >
-                      <X size={12} />
-                    </button>
-                  </Badge>
-                )}
-              </div>
+                    <X size={12} />
+                  </button>
+                </Badge>
+              )}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={resetFilters}
-                className="text-[#7a8a96] hover:text-[#00d4ff] hover:bg-[#1a2332] whitespace-nowrap shrink-0"
+                className="text-[#7a8a96] hover:text-[#00d4ff] hover:bg-[#1a2332]/50 h-7 px-3 text-xs ml-auto"
               >
                 Clear All
               </Button>
