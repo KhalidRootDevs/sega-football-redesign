@@ -17,7 +17,7 @@ export default function Support() {
 
         {/* Telegram Channel */}
         <a
-          href="https://t.me/betlive"
+          href="https://t.me/segafootball"
           target="_blank"
           rel="noopener noreferrer"
           className="group block mb-4"

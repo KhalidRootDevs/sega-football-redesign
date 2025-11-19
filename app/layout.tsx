@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Betlive - Live Scores & Betting",
+  title: "segafootball - Live Scores & Betting",
   description: "Live sports scores and betting platform",
   generator: "v0.app",
 };

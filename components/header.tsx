@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Search, Bell, ChevronDown } from "lucide-react"
+import { Search, Bell, ChevronDown } from "lucide-react";
 
 export default function Header() {
   return (
@@ -12,7 +12,7 @@ export default function Header() {
             <div className="w-6 h-6 bg-blue-400 rounded-full flex items-center justify-center text-xs font-bold">
               BL
             </div>
-            <span className="font-bold text-sm">Betlive</span>
+            <span className="font-bold text-sm">segafootball</span>
           </div>
 
           {/* Sports Categories */}
@@ -49,5 +49,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

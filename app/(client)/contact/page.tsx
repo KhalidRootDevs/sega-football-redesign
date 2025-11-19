@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Mail, Send, MessageCircle, Plus, Minus } from 'lucide-react';
+import { Mail, Send, MessageCircle, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -37,57 +37,67 @@ export default function ContactPage() {
   const faqs = [
     {
       question: "What sports and leagues do you cover?",
-      answer: "We cover all major sports including football, basketball, tennis, cricket, and more. You can access leagues worldwide including Premier League, La Liga, NBA, NFL, and many others. Check our pricing page for specific league packages."
+      answer:
+        "We cover all major sports including football, basketball, tennis, cricket, and more. You can access leagues worldwide including Premier League, La Liga, NBA, NFL, and many others. Check our pricing page for specific league packages.",
     },
     {
       question: "How do subscriptions work?",
-      answer: "We offer both universal all-access subscriptions and individual league subscriptions. You can choose monthly, quarterly, or yearly plans with discounts for longer commitments. All subscriptions auto-renew but can be cancelled anytime."
+      answer:
+        "We offer both universal all-access subscriptions and individual league subscriptions. You can choose monthly, quarterly, or yearly plans with discounts for longer commitments. All subscriptions auto-renew but can be cancelled anytime.",
     },
     {
       question: "What payment methods do you accept?",
-      answer: "We accept credit/debit cards (Visa, Mastercard, Maestro) through Stripe, and cryptocurrency payments (Bitcoin, Ethereum, BNB, USDT) for added flexibility and privacy."
+      answer:
+        "We accept credit/debit cards (Visa, Mastercard, Maestro) through Stripe, and cryptocurrency payments (Bitcoin, Ethereum, BNB, USDT) for added flexibility and privacy.",
     },
     {
       question: "Can I cancel my subscription anytime?",
-      answer: "Yes, absolutely! You can cancel your subscription at any time from your account settings. There are no cancellation fees, and you'll retain access until the end of your current billing period."
+      answer:
+        "Yes, absolutely! You can cancel your subscription at any time from your account settings. There are no cancellation fees, and you'll retain access until the end of your current billing period.",
     },
     {
       question: "Do you offer refunds?",
-      answer: "We offer a 7-day money-back guarantee for all new subscriptions. If you're not satisfied within the first week, contact our support team for a full refund. Refunds after this period are handled on a case-by-case basis."
+      answer:
+        "We offer a 7-day money-back guarantee for all new subscriptions. If you're not satisfied within the first week, contact our support team for a full refund. Refunds after this period are handled on a case-by-case basis.",
     },
     {
       question: "Is there a free trial available?",
-      answer: "Yes! We offer a 3-day free trial for new users on select subscription plans. No credit card required for the trial period. You can explore all features before committing to a paid plan."
+      answer:
+        "Yes! We offer a 3-day free trial for new users on select subscription plans. No credit card required for the trial period. You can explore all features before committing to a paid plan.",
     },
     {
       question: "Can I watch matches on multiple devices?",
-      answer: "Yes, depending on your subscription plan. Basic plans allow streaming on 1 device, while premium plans support up to 5 simultaneous streams. You can access your account on any device with internet connection."
+      answer:
+        "Yes, depending on your subscription plan. Basic plans allow streaming on 1 device, while premium plans support up to 5 simultaneous streams. You can access your account on any device with internet connection.",
     },
     {
       question: "What if a match is postponed or cancelled?",
-      answer: "If a match is postponed, we'll update the schedule automatically. For cancelled matches, no credits are issued as your subscription provides access to all available content during the period, not individual matches."
+      answer:
+        "If a match is postponed, we'll update the schedule automatically. For cancelled matches, no credits are issued as your subscription provides access to all available content during the period, not individual matches.",
     },
     {
       question: "Do you provide match highlights and replays?",
-      answer: "Yes! All matches include full replays available for 30 days after the event, plus 5-10 minute highlight packages. Premium subscribers get extended replay access and additional bonus content."
+      answer:
+        "Yes! All matches include full replays available for 30 days after the event, plus 5-10 minute highlight packages. Premium subscribers get extended replay access and additional bonus content.",
     },
     {
       question: "How do I contact customer support?",
-      answer: "You can reach us via email at support@betlive.com, through our contact form above, or join our Telegram channel for instant updates. Our support team typically responds within 24 hours during business days."
-    }
+      answer:
+        "You can reach us via email at support@segafootball.com, through our contact form above, or join our Telegram channel for instant updates. Our support team typically responds within 24 hours during business days.",
+    },
   ];
 
   const onSubmit = async (data: ContactFormData) => {
     // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    
+
     console.log("Form submitted:", data);
-    
+
     toast({
       title: "Message sent successfully!",
       description: "We'll get back to you as soon as possible.",
     });
-    
+
     reset();
   };
 
@@ -130,7 +140,7 @@ export default function ContactPage() {
                   <input
                     id="name"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Olivia Evelyn"
                     {...register("name")}
                     className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00303D] focus:border-transparent transition-all"
                   />
@@ -243,10 +253,10 @@ export default function ContactPage() {
                 Get in touch via email for detailed inquiries
               </p>
               <a
-                href="mailto:support@betlive.com"
+                href="mailto:support@segafootball.com"
                 className="text-white font-semibold hover:underline break-all"
               >
-                support@betlive.com
+                support@segafootball.com
               </a>
             </div>
 
@@ -262,7 +272,7 @@ export default function ContactPage() {
                 Join our Telegram channel for instant updates
               </p>
               <a
-                href="https://t.me/betlive_support"
+                href="https://t.me/segafootball_support"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-4 py-2.5 rounded-xl transition-all"
@@ -290,7 +300,9 @@ export default function ContactPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Saturday</span>
-                  <span className="font-semibold text-gray-900">10AM - 4PM</span>
+                  <span className="font-semibold text-gray-900">
+                    10AM - 4PM
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Sunday</span>
@@ -338,7 +350,7 @@ export default function ContactPage() {
                     )}
                   </div>
                 </button>
-                
+
                 {openFaqIndex === index && (
                   <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
                     <div className="border-t border-gray-100 pt-4">
@@ -358,10 +370,11 @@ export default function ContactPage() {
               Still have questions?
             </h3>
             <p className="text-gray-200 mb-6 max-w-xl mx-auto">
-              Can't find the answer you're looking for? Our support team is here to help.
+              Can't find the answer you're looking for? Our support team is here
+              to help.
             </p>
             <a
-              href="mailto:support@betlive.com"
+              href="mailto:support@segafootball.com"
               className="inline-flex items-center gap-2 bg-white text-[#00303D] hover:bg-gray-100 font-semibold px-6 py-3 rounded-xl transition-all shadow-lg"
             >
               <Mail className="w-5 h-5" />

@@ -25,7 +25,7 @@ export const hotMatches = [
         score: 0,
       },
     ],
-    liveStatus: false,
+    liveStatus: true,
   },
   {
     id: "691ae7bb22a98fae4251c36f",
@@ -53,7 +53,7 @@ export const hotMatches = [
         score: 0,
       },
     ],
-    liveStatus: false,
+    liveStatus: true,
   },
   {
     id: "691ae7bad8da0a6ed26ebee9",
