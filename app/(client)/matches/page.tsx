@@ -23,184 +23,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 import MatchCard from "@/components/main/match-card";
 import MatchListItem from "@/components/matches/match-list-item";
+import { fixturesData } from "@/lib/data/fixtures";
+import { leaguesData } from "@/lib/data/leagues";
+import { teamsData } from "@/lib/data/teams";
 
 type MatchStatus = "live" | "upcoming" | "finished";
 type ViewMode = "grid" | "list";
 type SortOrder = "asc" | "desc";
-
-// Your actual data
-const leaguesData = [
-  {
-    name: "Bundesliga",
-    position: 9999,
-    image: "https://media.api-sports.io/football/leagues/78.png",
-    id: 78,
-    matches: 0,
-  },
-  {
-    name: "Pro League",
-    position: 9999,
-    image: "https://media.api-sports.io/football/leagues/307.png",
-    id: 307,
-    matches: 3,
-  },
-];
-
-const teamsData = [
-  {
-    id: "68d50f91f161cc8d8c16af5f",
-    uId: 9863,
-    name: "Berceo",
-    image: "https://media.api-sports.io/football/teams/9863.png",
-    newsUrl: "",
-    position: 9999,
-    createdAt: "2025-09-25T09:46:57.193Z",
-    updatedAt: "2025-09-25T09:46:57.193Z",
-  },
-  {
-    id: "68d50f98f161cc8d8c16af69",
-    uId: 529,
-    name: "Barcelona",
-    image: "https://media.api-sports.io/football/teams/529.png",
-    newsUrl: "",
-    position: 9999,
-    createdAt: "2025-09-25T09:47:04.370Z",
-    updatedAt: "2025-09-25T09:47:04.370Z",
-  },
-];
-
-export const fixturesData = [
-  {
-    matches: [
-      {
-        id: "6902e8bb2bb1abfe1fe7c411",
-        name: "Pro League",
-        matchId: 1762610892610,
-        fixtureId: 1435971,
-        league: {
-          id: 307,
-          name: "Pro League",
-          image: "https://media.api-sports.io/football/leagues/307.png",
-        },
-        startingAt: "1760541300",
-        startingAtTimestamps: 1760541300,
-        matchType: "normal",
-        participants: [
-          {
-            id: 2956,
-            name: "Damac",
-            image: "https://media.api-sports.io/football/teams/2956.png",
-            score: 5,
-          },
-          {
-            id: 2931,
-            name: "Al-Fateh",
-            image: "https://media.api-sports.io/football/teams/2931.png",
-            score: 6,
-          },
-        ],
-        status: "active",
-        liveStatus: false,
-        position: 99999,
-        streamSources: [
-          "6902e8bb2bb1abfe1fe7c413",
-          "6902e8bb2bb1abfe1fe7c414",
-          "6902e8bb2bb1abfe1fe7c415",
-        ],
-        platforms: ["6902e90d2bb1abfe1fe7c453"],
-        createdAt: "2025-10-30T04:25:31.765Z",
-        updatedAt: "2025-10-30T06:20:21.574Z",
-        dateOnly: "2025-10-15",
-      },
-    ],
-    timestamp: "2025-10-15",
-  },
-  {
-    matches: [
-      {
-        id: "6902e8bd2bb1abfe1fe7c41f",
-        name: "Pro League",
-        matchId: 1762373387880,
-        fixtureId: 1435969,
-        league: {
-          id: 307,
-          name: "Pro League",
-          image: "https://media.api-sports.io/football/leagues/307.png",
-        },
-        startingAt: "1761845400",
-        startingAtTimestamps: 1761845400,
-        matchType: "normal",
-        participants: [
-          {
-            id: 2929,
-            name: "Al-Ahli Jeddah",
-            image: "https://media.api-sports.io/football/teams/2929.png",
-            score: 0,
-          },
-          {
-            id: 10511,
-            name: "Al Riyadh",
-            image: "https://media.api-sports.io/football/teams/10511.png",
-            score: 0,
-          },
-        ],
-        status: "active",
-        liveStatus: false,
-        position: 99999,
-        streamSources: [
-          "6902e8bd2bb1abfe1fe7c421",
-          "6902e8bd2bb1abfe1fe7c422",
-          "6902e8bd2bb1abfe1fe7c423",
-        ],
-        platforms: ["6902e90d2bb1abfe1fe7c453"],
-        createdAt: "2025-10-30T04:25:33.127Z",
-        updatedAt: "2025-10-30T04:27:10.579Z",
-        dateOnly: "2025-10-30",
-      },
-      {
-        id: "6902e8be2bb1abfe1fe7c42d",
-        name: "Pro League",
-        matchId: 1762379754026,
-        fixtureId: 1435973,
-        league: {
-          id: 307,
-          name: "Pro League",
-          image: "https://media.api-sports.io/football/leagues/307.png",
-        },
-        startingAt: "1761845400",
-        startingAtTimestamps: 1761845400,
-        matchType: "normal",
-        participants: [
-          {
-            id: 10509,
-            name: "Al Kholood",
-            image: "https://media.api-sports.io/football/teams/10509.png",
-            score: 0,
-          },
-          {
-            id: 10513,
-            name: "NEOM",
-            image: "https://media.api-sports.io/football/teams/10513.png",
-            score: 0,
-          },
-        ],
-        status: "active",
-        liveStatus: false,
-        position: 99999,
-        streamSources: [
-          "6902e8be2bb1abfe1fe7c42f",
-          "6902e8be2bb1abfe1fe7c430",
-          "6902e8be2bb1abfe1fe7c431",
-        ],
-        platforms: ["6902e90d2bb1abfe1fe7c453"],
-        createdAt: "2025-10-30T04:25:34.374Z",
-        updatedAt: "2025-10-30T04:27:17.939Z",
-        dateOnly: "2025-10-30",
-      },
-    ],
-    timestamp: "2025-10-30",
-  },
-];
 
 // Transform your data to match the expected Match interface
 export const transformMatches = () => {
@@ -213,17 +42,16 @@ export const transformMatches = () => {
       if (match.liveStatus) {
         status = "live";
       } else if (
-        match.status === "finished" ||
+        match.status === "ended" ||
         match.participants.some((p) => p.score > 0)
       ) {
         status = "finished";
       }
 
-      // Convert timestamp to Date
-      const matchDate = new Date(parseInt(match.startingAt) * 1000);
+      const matchDate = new Date(match.startingAtTimestamps * 1000);
 
       const transformedMatch = {
-        id: match.matchId,
+        id: match.id, // Use match.id instead of match.matchId
         home: match.participants[0].name,
         homeImage: match.participants[0].image,
         away: match.participants[1].name,
@@ -236,13 +64,17 @@ export const transformMatches = () => {
           minute: "2-digit",
         }),
         date: matchDate.toISOString(),
-        league: match.league.name,
-        leagueIcon: match.league.image,
+        league: match.league?.name,
+        leagueIcon: match.league?.image,
         fixtureId: match.fixtureId,
-        startingAt: match.startingAt,
+        startingAt: match.startingAtTimestamps.toString(),
         matchType: match.matchType,
         streamSources: match.streamSources,
         platforms: match.platforms,
+        name: match.name,
+        position: match.position,
+        createdAt: match.createdAt,
+        updatedAt: match.updatedAt,
       };
 
       allMatches.push(transformedMatch);
@@ -264,23 +96,15 @@ export default function MatchesPage() {
   // Transform and use your actual data
   const mockMatches = useMemo(() => transformMatches(), []);
 
-  // Extract unique leagues from your actual data
+  // Use the provided leaguesData instead of extracting from matches
   const leagues = useMemo(() => {
-    const uniqueLeagues = Array.from(
-      new Set(mockMatches.map((match) => match.league))
-    );
-    return uniqueLeagues.sort();
-  }, [mockMatches]);
+    return leaguesData.map((league) => league.name).sort();
+  }, []);
 
-  // Extract unique teams from your actual data
+  // Use the provided teamsData instead of extracting from matches
   const teams = useMemo(() => {
-    const allTeams = new Set<string>();
-    mockMatches.forEach((match) => {
-      allTeams.add(match.home);
-      allTeams.add(match.away);
-    });
-    return Array.from(allTeams).sort();
-  }, [mockMatches]);
+    return teamsData.map((team) => team.name).sort();
+  }, []);
 
   // Filter and sort matches
   const filteredMatches = useMemo(() => {

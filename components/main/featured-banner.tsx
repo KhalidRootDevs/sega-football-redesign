@@ -2,73 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Play, Info, Calendar } from "lucide-react";
+import { hotMatches } from "@/lib/data/hot-matches";
 
 export default function FeaturedBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const featuredMatches = [
-    {
-      id: 1,
-      time: "Today, 08:30 PM",
-      league: "Premier League",
-      match: "Liverpool FC vs Manchester United",
-      description:
-        "Watch the classic rivalry unfold in this Premier League showdown at Anfield",
-      team1: {
-        name: "Liverpool FC",
-        logo: "/teams/liverpool.png",
-        shortName: "LIV",
-      },
-      team2: {
-        name: "Manchester United",
-        logo: "/teams/manutd.png",
-        shortName: "MUN",
-      },
-    },
-    {
-      id: 2,
-      time: "Today, 10:15 PM",
-      league: "La Liga",
-      match: "Real Madrid vs FC Barcelona",
-      description:
-        "El Clásico - Don't miss this epic encounter between Spanish giants",
-      team1: {
-        name: "Real Madrid",
-        logo: "/teams/realmadrid.png",
-        shortName: "RMA",
-      },
-      team2: {
-        name: "FC Barcelona",
-        logo: "/teams/barcelona.png",
-        shortName: "BAR",
-      },
-    },
-    {
-      id: 3,
-      time: "Tomorrow, 07:00 PM",
-      league: "Champions League",
-      match: "Bayern Munich vs Paris SG",
-      description:
-        "Champions League quarter-finals clash between European powerhouses",
-      team1: {
-        name: "Bayern Munich",
-        logo: "/teams/bayern.png",
-        shortName: "BAY",
-      },
-      team2: { name: "Paris SG", logo: "/teams/psg.png", shortName: "PSG" },
-    },
-  ];
-
   const nextSlide = () => {
-    setCurrentSlide((prev) =>
-      prev === featuredMatches.length - 1 ? 0 : prev + 1
-    );
+    setCurrentSlide((prev) => (prev === hotMatches.length - 1 ? 0 : prev + 1));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) =>
-      prev === 0 ? featuredMatches.length - 1 : prev - 1
-    );
+    setCurrentSlide((prev) => (prev === 0 ? hotMatches.length - 1 : prev - 1));
   };
 
   const goToSlide = (index: number) => {
@@ -81,7 +25,18 @@ export default function FeaturedBanner() {
     return () => clearInterval(interval);
   }, []);
 
-  const currentMatch = featuredMatches[currentSlide];
+  const currentMatch = hotMatches[currentSlide];
+
+  // Convert timestamp to readable time
+  const matchTime = currentMatch.startingAtTimestamps
+    ? new Date(currentMatch.startingAtTimestamps * 1000).toLocaleTimeString(
+        [],
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+        }
+      )
+    : "TBD";
 
   return (
     <div className="relative bg-gradient-to-r from-[#00303d] via-[#004557] to-[#00303d] rounded-xl p-4 sm:p-6 overflow-hidden border border-[#1a2a38]">
@@ -106,14 +61,12 @@ export default function FeaturedBanner() {
         <div className="flex items-center justify-between mb-4">
           <div className="bg-white/10 px-2.5 py-1 rounded-full backdrop-blur-sm">
             <span className="text-xs font-semibold text-[#00d4ff]">
-              {currentMatch.league}
+              {currentMatch.league.name}
             </span>
           </div>
           <div className="flex items-center gap-2 bg-white/10 px-2.5 py-1 rounded-full backdrop-blur-sm">
             <Calendar size={12} className="text-[#00d4ff]" />
-            <span className="text-xs font-medium text-white">
-              {currentMatch.time}
-            </span>
+            <span className="text-xs font-medium text-white">{matchTime}</span>
           </div>
         </div>
 
@@ -123,8 +76,8 @@ export default function FeaturedBanner() {
           <div className="flex flex-col items-center text-center flex-1">
             <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/10 rounded-lg flex items-center justify-center p-2 mb-2 border border-white/20 backdrop-blur-sm">
               <img
-                src={currentMatch.team1.logo || "/placeholder.svg"}
-                alt={currentMatch.team1.name}
+                src={currentMatch.participants[0].image || "/placeholder.svg"}
+                alt={currentMatch.participants[0].name}
                 className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
@@ -134,11 +87,13 @@ export default function FeaturedBanner() {
                 }}
               />
               <div className="hidden w-8 h-8 sm:w-10 sm:h-10 bg-white/5 rounded-lg flex items-center justify-center text-sm font-bold text-white">
-                {currentMatch.team1.shortName}
+                {currentMatch.participants[0].name
+                  .substring(0, 3)
+                  .toUpperCase()}
               </div>
             </div>
             <span className="text-xs font-semibold text-white text-center leading-tight line-clamp-2">
-              {currentMatch.team1.name}
+              {currentMatch.participants[0].name}
             </span>
           </div>
 
@@ -149,7 +104,7 @@ export default function FeaturedBanner() {
             </div>
             <div className="text-center">
               <span className="text-xs font-semibold text-[#00d4ff]">
-                08:30
+                {matchTime}
               </span>
             </div>
           </div>
@@ -158,8 +113,8 @@ export default function FeaturedBanner() {
           <div className="flex flex-col items-center text-center flex-1">
             <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/10 rounded-lg flex items-center justify-center p-2 mb-2 border border-white/20 backdrop-blur-sm">
               <img
-                src={currentMatch.team2.logo || "/placeholder.svg"}
-                alt={currentMatch.team2.name}
+                src={currentMatch.participants[1].image || "/placeholder.svg"}
+                alt={currentMatch.participants[1].name}
                 className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
@@ -169,18 +124,21 @@ export default function FeaturedBanner() {
                 }}
               />
               <div className="hidden w-8 h-8 sm:w-10 sm:h-10 bg-white/5 rounded-lg flex items-center justify-center text-sm font-bold text-white">
-                {currentMatch.team2.shortName}
+                {currentMatch.participants[1].name
+                  .substring(0, 3)
+                  .toUpperCase()}
               </div>
             </div>
             <span className="text-xs font-semibold text-white text-center leading-tight line-clamp-2">
-              {currentMatch.team2.name}
+              {currentMatch.participants[1].name}
             </span>
           </div>
         </div>
 
         {/* Match Description */}
         <p className="text-xs text-white/80 text-center mb-4 px-2 leading-relaxed line-clamp-2">
-          {currentMatch.description}
+          {currentMatch.name} - {currentMatch.participants[0].name} vs{" "}
+          {currentMatch.participants[1].name}
         </p>
 
         {/* Action Buttons */}
@@ -198,7 +156,7 @@ export default function FeaturedBanner() {
 
       {/* Slide Indicators */}
       <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-30 flex gap-1.5">
-        {featuredMatches.map((_, index) => (
+        {hotMatches.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}

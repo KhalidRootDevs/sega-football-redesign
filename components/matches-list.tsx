@@ -1,6 +1,6 @@
 "use client";
 import MatchCard from "./match-card";
-import { fixturesData, transformMatches } from "@/app/(client)/matches/page";
+import { transformMatches } from "@/app/(client)/matches/page";
 import { useMemo } from "react";
 
 interface Match {
@@ -28,21 +28,21 @@ export default function MatchesList({ activeTab }: MatchesListProps) {
 
   const groupedMatches = useMemo(() => {
     const groups: { [key: string]: Match[] } = {};
-    
+
     allMatches.forEach((match: any) => {
       const matchDate = new Date(match.date);
-      const dateKey = matchDate.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric', 
-        year: 'numeric' 
+      const dateKey = matchDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
       });
-      
+
       if (!groups[dateKey]) {
         groups[dateKey] = [];
       }
       groups[dateKey].push(match);
     });
-    
+
     return groups;
   }, [allMatches]);
 
@@ -60,13 +60,16 @@ export default function MatchesList({ activeTab }: MatchesListProps) {
   };
 
   // Show empty state if no matches
-  const filteredGroupedMatches = Object.entries(groupedMatches).reduce((acc, [date, matches]) => {
-    const filtered = filterMatches(matches);
-    if (filtered.length > 0) {
-      acc[date] = filtered;
-    }
-    return acc;
-  }, {} as { [key: string]: Match[] });
+  const filteredGroupedMatches = Object.entries(groupedMatches).reduce(
+    (acc, [date, matches]) => {
+      const filtered = filterMatches(matches);
+      if (filtered.length > 0) {
+        acc[date] = filtered;
+      }
+      return acc;
+    },
+    {} as { [key: string]: Match[] }
+  );
 
   if (Object.keys(filteredGroupedMatches).length === 0) {
     return (

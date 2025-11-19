@@ -3,7 +3,7 @@
 import { Play, Eye, Calendar, Trophy, ExternalLink } from "lucide-react";
 
 interface Match {
-  id: number;
+  id: string;
   home: string;
   homeImage?: string;
   away: string;
@@ -12,13 +12,19 @@ interface Match {
   awayScore?: number;
   status: "live" | "upcoming" | "finished";
   time: string;
+  startingAtTimestamps?: number;
+  date: string;
   league: string;
   leagueIcon?: string;
-  fixtureId?: number;
-  startingAtTimestamps?: number;
-  matchType?: string;
-  streamSources?: string[];
-  platforms?: string[];
+  fixtureId: number;
+  startingAt: string;
+  matchType: "hot" | "normal";
+  streamSources: string[];
+  platforms: string[];
+  name?: string;
+  position?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface MatchCardProps {

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import FeaturedMatch from "./featured-match"
-import MatchesList from "./matches-list"
+import { useState } from "react";
+import FeaturedMatch from "./featured-match";
+import MatchesList from "./matches-list";
 
 export default function MainContent() {
-  const [activeTab, setActiveTab] = useState("all")
+  const [activeTab, setActiveTab] = useState("all");
 
   return (
     <main className="flex-1 p-6 max-h-[calc(100vh-80px)] overflow-y-auto">
@@ -37,8 +37,8 @@ export default function MainContent() {
         </div>
 
         {/* Matches List */}
-        <MatchesList />
+        <MatchesList activeTab={activeTab} />
       </div>
     </main>
-  )
+  );
 }
