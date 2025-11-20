@@ -19,12 +19,12 @@ export default function MatchesTabs({
   ];
 
   return (
-    <div className="flex gap-3 mb-6 overflow-x-auto scrollbar-hide pb-2">
+    <div className="flex gap-3 mb-2 lg:mb-6 overflow-x-auto scrollbar-hide pb-2">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
-          className={`flex items-center gap-2 px-5 py-3 text-sm font-semibold rounded-lg border transition-all whitespace-nowrap min-w-[100px] justify-center ${
+          className={`flex items-center gap-2 px-2.5 lg:px-5 py-2 lg:py-3 text-sm font-semibold rounded-md lg:rounded-lg border transition-all whitespace-nowrap min-w-[100px] justify-center ${
             activeTab === tab.id
               ? "bg-[#00d4ff] text-[#0a0e12] border-[#00d4ff] hover:bg-[#00b8e6] hover:border-[#00b8e6]"
               : "bg-transparent text-[#7a8a96] border-[#2a3a48] hover:bg-[#1a2332] hover:text-white hover:border-[#00d4ff]/30"

@@ -50,7 +50,7 @@ export default function MatchCard({ match }: MatchCardProps) {
           badgeClass: "bg-blue-50 text-blue-600 border border-blue-200",
           buttonClass:
             "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white",
-          buttonText: "Set Reminder",
+          buttonText: "View Details",
           showScore: false,
           icon: Calendar,
           timeClass: "text-gray-900 font-semibold",
@@ -61,7 +61,7 @@ export default function MatchCard({ match }: MatchCardProps) {
           badgeClass: "bg-green-50 text-green-600 border border-green-200",
           buttonClass:
             "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white",
-          buttonText: "Match Highlights",
+          buttonText: "Match Details",
           showScore: true,
           icon: Trophy,
           timeClass: "text-gray-500",
@@ -97,7 +97,7 @@ export default function MatchCard({ match }: MatchCardProps) {
   return (
     <div className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:border-gray-200">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 pt-4 pb-3 bg-gradient-to-r from-gray-50 to-gray-100/50">
+      <div className="flex items-center justify-between px-2 lg:px-6 pt-4 pb-3 bg-gradient-to-r from-gray-50 to-gray-100/50">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center shadow-sm border border-gray-200 overflow-hidden">
             {match.leagueIcon ? (
@@ -128,7 +128,7 @@ export default function MatchCard({ match }: MatchCardProps) {
       </div>
 
       {/* Match Content */}
-      <div className="px-6 py-5">
+      <div className="px-2 lg:px-6 py-2 lg:py-5">
         <div className="flex items-center justify-between gap-6">
           {/* Home Team */}
           <div className="flex flex-col items-center gap-3 flex-1 min-w-0">
